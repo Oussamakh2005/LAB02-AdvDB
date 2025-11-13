@@ -12,7 +12,7 @@ Each table is described using a JSON schema in a file named ```schema.json```:
 ```json
 {
   "table_name": "Employee",
-  "file_name" : "c:\db\fEmployee.bin",
+  "file_name" : "<file location>",
   "fields": [
     {"name": "id", "type": "int"},
     {"name": "name", "type": "char(20)"},
