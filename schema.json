@@ -1,7 +1,7 @@
 [
   {
     "table_name": "Employee",
-    "file_name" : "<file location>",
+    "file_name" : "employee_heap_file",
     "fields": [
       {"name": "id", "type": "int"},
       {"name": "name", "type": "char(20)"},
@@ -10,7 +10,7 @@
   },
   {
     "table_name": "Dept",
-    "file_name" : "<file location>",
+    "file_name" : "dept_heap_file",
     "fields": [
       {"name": "id", "type": "int"},
       {"name": "name", "type": "char(20)"},
