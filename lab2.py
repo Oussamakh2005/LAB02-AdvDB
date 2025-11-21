@@ -14,9 +14,8 @@ def get_table(table_name : str , schema) :
     raise ValueError(f"Table {table_name} not found in schema.")
 def encode_record(record_dict, table_name, schema) -> bytes:
     # check if the table name is valid
-    schema = load_schema("schema.json")
-    table = get_table(table_name,schema)
-    
+    schema_dic = load_schema(schema)
+    table = get_table(table_name,schema_dic)
     # start encoding the record 
     record = b""
     for field in table["fields"] :
@@ -44,10 +43,8 @@ def encode_record(record_dict, table_name, schema) -> bytes:
             record += txt
     return record
 
-
-
 def decode_record(record_bytes, table_name, schema) -> dict:
-    schema = load_schema("schema.json")
+    schema = load_schema(schema)
 
 
 #def insert_structured_record(table_name, schema, record_dict):
