@@ -44,7 +44,35 @@ def encode_record(record_dict, table_name, schema) -> bytes:
     return record
 
 def decode_record(record_bytes, table_name, schema) -> dict:
-    schema = load_schema(schema)
+    schema_dic = load_schema(schema)
+    record = {}
+    table = get_table(table_name,schema_dic)
+    start_byte = 0
+    for field in table["fields"] :
+        name = field["name"]
+        typ = field["type"]
+        value = None
+        if(typ == "int") :
+            value = struct.unpack("!i",record_bytes[start_byte:start_byte + 4])[0]
+            start_byte +=4
+        elif(typ == "float") :
+            value = struct.unpack("!f",record_bytes[start_byte:start_byte + 4])[0]
+            start_byte +=4
+        elif(typ.startswith("char(")) :
+            size = int(typ[5 : -1])
+            value = record_bytes[start_byte : start_byte + size].decode("utf-8").rstrip()
+            start_byte += size
+        elif(typ.starswith("varchar(")) :
+            length = struct.unpack('!B',record_bytes[start_byte:start_byte + 1])
+            start_byte += 1
+            value = record_bytes[start_byte : start_byte + length].decode("utf-8")
+            start_byte += length
+        record[field["name"]] = value
+    return record
+
+
+
+
 
 
 #def insert_structured_record(table_name, schema, record_dict):
@@ -52,3 +80,15 @@ def decode_record(record_bytes, table_name, schema) -> dict:
 
 
 #def read_all_structured_records(table_name, schema):
+
+
+#================= Test =====================
+record = {
+    "id" : 1,
+    "name" : "John Doe",
+    "salary" : 150.34
+}
+record_bytes = encode_record(record, "Employee", "schema.json")
+print(f"Encoded record bytes: {record_bytes}")
+decoded_record = decode_record(record_bytes, "Employee", "schema.json")
+print(f"Decoded record: {decoded_record}")
