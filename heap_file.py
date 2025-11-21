@@ -124,7 +124,7 @@ def get_record_from_file(file_name : str , page_number : int , record_id : int) 
 
 # 10 - get all records from a page :
 def get_all_records_from_page(page_data : bytes) :
-    records : bytearray = []
+    records = []
     #get slots count :
     slots_count = get_slots_number(page_data)
     for i in range(4092 - (slots_count * 4) , 4092 , 4) :
@@ -135,7 +135,7 @@ def get_all_records_from_page(page_data : bytes) :
 
 # 11 - get all records from file :
 def get_all_records_from_file(file_name : str) :
-    records : list[bytearray] = []
+    records  = []
     page_number = 0 
     while(True) :
         try :

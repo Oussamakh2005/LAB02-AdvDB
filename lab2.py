@@ -84,7 +84,19 @@ def insert_structured_record(table_name, schema, record_dict):
 
 
 
-#def read_all_structured_records(table_name, schema):
+def read_all_structured_records(table_name, schema):
+    record_list = []
+    schema_dic = load_schema(schema)
+    table = get_table(table_name,schema_dic)
+    file_name = table["file_name"]
+    records_byte_array = heap_file.get_all_records_from_file(file_name)
+    for records in records_byte_array :
+        for record in records :
+            record_bytes = record
+            decoded_record = decode_record(record_bytes,table_name,schema)
+            record_list.append(decoded_record)
+    return record_list
+
 
 
 #================= Test =====================
@@ -98,6 +110,16 @@ record2 = {
     "name" : "John Doe",
     "Location" : "guemar eloud algeria"
 }
+record3= {
+    "id" : 2,
+    "name" : "Oussama Doe",
+    "salary" : 150.34
+}
+record4 = {
+    "id" : 3,
+    "name" : "Ali Doe",
+    "salary" : 150.34
+}
 #record_bytes = encode_record(record, "Employee", "schema.json")
 #print(f"Encoded record bytes: {record_bytes}")
 #decoded_record = decode_record(record_bytes, "Employee", "schema.json")
@@ -110,4 +132,10 @@ heap_file.create_heap_file(employee_heap_file)
 heap_file.create_heap_file(dept_heap_file)
 #insert record to a heap file 
 insert_structured_record("Employee","schema.json",record)
+insert_structured_record("Employee","schema.json",record3)
+insert_structured_record("Employee","schema.json",record4)
 insert_structured_record("Dept","schema.json",record2)
+#read all records from a heap file
+records = read_all_structured_records("Employee","schema.json")
+for record in records :
+    print(record)
