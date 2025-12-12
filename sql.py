@@ -80,12 +80,12 @@ def execute_insert_query(query : str , schema : str) :
     for i in range(0 , len(stracture["fields"])) :
         record[stracture["fields"][i]] = stracture["values"][i]
     records_managment.insert_structured_record(stracture["table"] , schema , record)
-    return True
+    return [record]
 def execute_query(query, schema):
     if query.startswith("SELECT") :
         return execute_select_query(query,schema)
     elif query.startswith("INSERT") :
-        execute_insert_query(query,schema)
+        return execute_insert_query(query,schema)
     else :
         raise ValueError("Invalid query")
 
