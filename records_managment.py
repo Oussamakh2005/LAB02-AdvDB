@@ -23,7 +23,7 @@ def encode_record(record_dict, table_name, schema) -> bytes:
         typ  = field["type"]
         value = record_dict[name]
         if(typ == "int") :
-            record += struct.pack("!i",value)
+            record += struct.pack("!i",int(value))
         elif(typ == "float") :
             record += struct.pack("!f",value)
         elif(typ.startswith("char(")) :
@@ -100,22 +100,8 @@ def read_all_structured_records(table_name, schema):
 
 
 #================= Test =====================
-record = {
-    "id" : 1,
-    "name" : "John Doe",
-    "salary" : 150.34
-}
-record2 = {
-    "id" : 1,
-    "name" : "John Doe",
-    "Location" : "guemar eloud algeria"
-}
-record3= {
-    "id" : 2,
-    "name" : "Oussama Doe",
-    "salary" : 150.34
-}
-record4 = {
+
+"""record = {
     "id" : 3,
     "name" : "Ali Doe",
     "salary" : 150.34
@@ -130,12 +116,4 @@ employee_heap_file = "employee_heap_file"
 dept_heap_file = "dept_heap_file"
 heap_file.create_heap_file(employee_heap_file)
 heap_file.create_heap_file(dept_heap_file)
-#insert record to a heap file 
-insert_structured_record("Employee","schema.json",record)
-insert_structured_record("Employee","schema.json",record3)
-insert_structured_record("Employee","schema.json",record4)
-insert_structured_record("Dept","schema.json",record2)
-#read all records from a heap file
-records = read_all_structured_records("Employee","schema.json")
-for record in records :
-    print(record)
+insert_structured_record("Employee","schema.json",record)"""
