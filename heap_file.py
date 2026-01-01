@@ -146,3 +146,5 @@ def get_all_records_from_file(file_name : str) :
             page_records = get_all_records_from_page(page_data)
             records.append(page_records)
             page_number += 1
+
+#create_heap_file("dept_heap_file")

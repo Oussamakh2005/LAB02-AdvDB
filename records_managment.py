@@ -62,8 +62,8 @@ def decode_record(record_bytes, table_name, schema) -> dict:
             size = int(typ[5 : -1])
             value = record_bytes[start_byte : start_byte + size].decode("utf-8").rstrip()
             start_byte += size
-        elif(typ.starswith("varchar(")) :
-            length = struct.unpack('!B',record_bytes[start_byte:start_byte + 1])
+        elif(typ.startswith("varchar(")) :
+            length = struct.unpack('!B',record_bytes[start_byte:start_byte + 1])[0]
             start_byte += 1
             value = record_bytes[start_byte : start_byte + length].decode("utf-8")
             start_byte += length
